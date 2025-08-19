@@ -2,13 +2,27 @@
 
 Welcome to the Culinary Recipes project! This is a web-based system for managing culinary recipes, built with a Python web framework. This guide provides all the necessary steps to set up the project locally for development.
 
-### Prerequisites
+This project is built using the following core technologies and libraries:
+
+* **Backend:** Python, Django
+* **Database:** PostgreSQL
+* **Caching:** Redis
+* **Web Server:** Gunicorn, Nginx
+* **Deployment:** Docker, AWS
+* **Cloud Services:** Cloudinary (for media uploads), Brevo/Anymail (for email sending)
+* **Other Libraries:** `django-embed-video`, `requests`, `psycopg2-binary`
+
+---
+
+## Prerequisites
 
 Before you begin, ensure you have the following software installed on your system:
 
-Python 3.11: The specific Python version required for this project.
+* **Python 3.11:** The specific Python version required for this project.
+* **Docker:** Used to run the PostgreSQL and Redis databases in isolated containers.
+* **Git:** To clone the project repository.
 
-Docker: Used to run the PostgreSQL and Redis databases in isolated containers.
+---
 
 ### 1. Clone the Repository
 
