@@ -6,7 +6,7 @@ Django==4.2.22
 django-anymail==8.6
 django-embed-video==1.4.7
 gunicorn==23.0.0
-idna==3.4
+idna==3.7
 packaging==25.0
 pillow==11.3.0
 psycopg2-binary==2.9.5
