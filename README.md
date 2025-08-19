@@ -1,88 +1,158 @@
 # Culinary Recipes - Restaurant Menu Management System
 
-This guide outlines the steps to set up your individual project for managing culinary recipes using a Python web framework. The project involves cloning a GitHub repository, configuring a virtual environment, setting up a database, and creating a superuser.
+Welcome to the Culinary Recipes project! This is a web-based system for managing culinary recipes, built with a Python web framework. This guide provides all the necessary steps to set up the project locally for development.
 
-## Cloning the Repository
+### Prerequisites
 
-1. Clone the GitHub repository for your Python web framework project using the command:
+Before you begin, ensure you have the following software installed on your system:
 
-   git clone https://github.com/Andon-ov/Culinary-Recipes.git
+Python 3.11: The specific Python version required for this project.
 
-## Navigating to Project Folder
+Docker: Used to run the PostgreSQL and Redis databases in isolated containers.
 
-2. Change the directory to the project folder using the command:
+### 1. Clone the Repository
 
-   cd Culinary-Recipes
+Clone the project from GitHub using the following command:
 
-## Setting up Virtual Environment
+    git clone https://github.com/Andon-ov/Culinary-Recipes.git
 
-3. Set up a virtual environment for your project using the command:
+Navigate to the Project Directory
+Change your current directory to the main project folder:
 
-   python -m venv venv
+    cd Culinary-Recipes/Culinary-Recipes/
 
-## Activating Virtual Environment
+### 2. Environment Setup
 
-4. Activate the virtual environment using the command:
+Create a Virtual Environment
+It's highly recommended to use a virtual environment to manage project dependencies. This isolates the project's packages from your system-wide Python installation.
 
-- On Linux/Mac:
-  ```
-  source venv/bin/activate
-  ```
-- On Windows:
-  ```
-  venv\Scripts\activate
-  ```
+    python3.11 -m venv venv
 
-## Installing Dependencies
+Activate the Virtual Environment
+Activate the newly created virtual environment based on your operating system:
 
-5. Install the required dependencies for your project using the command:
+On Linux/Mac:
 
-   pip install -r requirements.txt
+    source venv/bin/activate
 
-## Updating pip
+On Windows:
 
-6. Update pip to ensure it's up to date by using the command:
+    venv\Scripts\activate
 
-   pip install --upgrade pip
+Install Dependencies
+Install all required packages listed in requirements.txt:
 
-## Running the Development Server
+    pip install -r requirements.txt
+    pip install --upgrade pip
 
-7. Start the development server for your project using the command:
+Create Environment Variables
+This project uses a .env file to handle environment-specific configurations. Create a file named .env in the root of your project and add the following variables:
 
-   python manage.py runserver
+### .env file
 
-## Launching Postgres Container
+### Django Secret Key and Debug Settings
 
-8. Launch a Postgres container for your database using the command:
+    SECRET_KEY='your-django-secret-key'
+    DEBUG=True
+    ALLOWED_HOSTS='localhost 127.0.0.1'
 
-   docker run -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=1123QwER -e POSTGRES_DB=recipes_db -d -v my-postgres-data:/var/lib/postgresql/data --name postgres postgres:latest
+### Database Configuration (PostgreSQL)
 
-## Adding Database to PyCharm
+    DB_ENGINE='django.db.backends.postgresql'
+    DB_NAME='recipes_db'
+    DB_USER='postgres'
+    DB_PASSWORD='1123QwER'
+    DB_HOST='localhost'
+    DB_PORT=5432
 
-9. Add the database to your PyCharm project with the following credentials:
+### Cloudinary (for image uploads)
+
+    CLOUDINARY_CLOUD_NAME='your_cloudinary_cloud_name'
+    CLOUDINARY_API_KEY='your_cloudinary_api_key'
+    CLOUDINARY_API_SECRET='your_cloudinary_api_secret'
+
+### Anymail (for email sending via Sendinblue/Brevo)
+
+    API_KEY='your_brevo_api_key'
+
+Note: You can obtain your API keys by creating free accounts on Cloudinary and Brevo (formerly Sendinblue).
+
+### 3. Database Setup (using Docker)
+
+The project uses a PostgreSQL database and a Redis cache. The easiest way to run both services is by using Docker, which provides a clean and isolated environment.
+
+Launch the Database Containers
+Run the following commands to start both the PostgreSQL database and Redis cache.
+
+PostgreSQL Container
+This command will:
+
+docker run: Create and run a new container.
+
+-p 5432:5432: Map the container's internal port 5432 to your host machine's port 5432.
+
+-e ...: Set environment variables for the database credentials.
+
+-d: Run the container in detached mode (in the background).
+
+--name postgres: Give the container a friendly name for easier management.
+
+-v my-postgres-data:/var/lib/postgresql/data: Create a persistent volume to store your database data.
+
+    docker run -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=1123QwER -e POSTGRES_DB=recipes_db -d -v my-postgres-data:/var/lib/postgresql/data --name postgres postgres:latest
+
+Redis Container
+This command will start a Redis container for caching, also running in detached mode:
+
+     docker run -d --name my-redis-cache -p 6379:6379 redis:latest
+
+### Apply Database Migrations
+
+With both database services running, apply the migrations to create the necessary tables for the project:
+
+     python manage.py migrate
+
+### Create a Superuser
+
+Create an administrative user to access the Django admin panel:
+
+     python manage.py createsuperuser
+
+Follow the prompts to set up your username, email, and password.
+
+### 4. Running the Project
+
+Start the Development Server
+Finally, start the Django development server to view the project in your browser:
+
+    python manage.py runserver
+
+You can now access the application at http://127.0.0.1:8000/.
+
+### Add the database to your IDE project with the following credentials:
 
 - Username: postgres
 - Password: 1123QwER
 - Database: recipes_db
 
-## Applying Migrations
+### 5. Cleaning Up
 
-10. Apply the migrations for your database using the command:
+When you're finished with the project, you can stop and remove the Docker containers to free up system resources.
 
-```
-python manage.py migrate
-```
+### Stop and remove the PostgreSQL container
 
-## Creating a Superuser
+    docker stop postgres
+    docker rm postgres
 
-11. Create a superuser for your project using the command:
+### Stop and remove the Redis container
 
-```
-python manage.py createsuperuser
-```
+    docker stop my-redis-cache
+    docker rm my-redis-cache
 
-## Granting Permissions
+Warning: To free up storage space, you can also remove the persistent data volumes. This will permanently delete all your database data.
 
-12. Log in to the database and give all necessary permissions to the superuser.
+### Delete the PostgreSQL data volume
 
-This series of steps will help you set up your Python web framework project for managing culinary recipes. If you have any further questions or need additional assistance, feel free to ask!
+    docker volume rm my-postgres-data
+
+This guide should help you set up and run the project smoothly. If you have any questions or need further assistance, feel free to reach out. 🚀

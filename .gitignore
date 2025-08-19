@@ -80,3 +80,80 @@ postgresql/
 culinary_recipes/envs/.env
 culinary_recipes/envs/.env.prod
 
+
+# new ->
+
+# --------------------------------------------------------------------------
+# General Python & Django
+# --------------------------------------------------------------------------
+
+# Ignore virtual environments
+venv/
+.venv/
+env/
+# The venv_new you showed in your tree command
+culinary_recipes/venv_new/
+culinary_recipes/venv/
+
+
+# Compiled Python files
+**/__pycache__/
+*.py[cod]
+
+# Local database file (if using SQLite)
+*.sqlite3
+
+# Ignore media files (user uploads)
+media/
+culinary_recipes/media/
+
+# Ignore static files (collected via collectstatic)
+static/
+culinary_recipes/static/
+
+# Environment variables
+.env
+.env.prod
+culinary_recipes/envs/
+culinary_recipes/envs/.env
+culinary_recipes/envs/.env.prod
+
+# --------------------------------------------------------------------------
+# IDE-specific files
+# --------------------------------------------------------------------------
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+*.iml
+
+# --------------------------------------------------------------------------
+# Operating System & Other
+# --------------------------------------------------------------------------
+
+# macOS
+.DS_Store
+
+# Logs
+Logs/
+
+# Database backups/dumps
+*.dump
+*.sql
+*.pgdata
+*.pgdump
+*.pgbackups
+
+# Docker
+docker-compose.yml
+docker-compose.prod.yml
+Dockerfile
+
+# Nginx
+nginx/
+
+# Other temporary files
+*~
+*.swp
