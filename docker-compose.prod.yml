@@ -48,8 +48,6 @@
 #     depends_on:
 #       - web
 
-version: '3.4'
-
 services:
   web:
     image: bloodtaint/culinary_recipes
